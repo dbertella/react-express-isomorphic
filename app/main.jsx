@@ -1,25 +1,8 @@
 import React from 'react';
 import VegetableList from './components/VegetableList.jsx';
+import VegetableItemStore from './stores/VegetableItemStore.jsx';
 
-const initial = [
-  {
-    name: 'Carote',
-  },
-  {
-    name: 'Patate',
-  },
-  {
-    name: 'Peperoni',
-  },
-  {
-    name: 'Melanzane',
-  },
-  {
-    name: 'Lattuga',
-  },
-  {
-    name: 'Zucchine',
-  },
-];
+const initial = VegetableItemStore.getAllVegetables();
 
 React.render(<VegetableList items={initial} />, app);
+

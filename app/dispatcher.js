@@ -2,7 +2,7 @@ import guid from 'guid';
 
 const listeners = {};
 
-export default Dispatcher = {
+const Dispatcher = {
   register: function(callback) {
     const id = guid.raw();
     listeners[id] = callback;
@@ -18,3 +18,5 @@ export default Dispatcher = {
     }
   },
 };
+
+export default Dispatcher;
