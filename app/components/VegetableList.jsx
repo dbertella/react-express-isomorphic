@@ -1,5 +1,6 @@
 import React from 'react';
 import VegetableItem from './VegetableItem.jsx';
+import VegetableAddItem from './VegetableAddItem.jsx';
 
 class VegetableList extends React.Component {
 
@@ -9,6 +10,7 @@ class VegetableList extends React.Component {
       <div>
         <h1>Verdure</h1>
         { vegetableListItem }
+        <VegetableAddItem />
       </div>
     );
   }
@@ -18,4 +20,4 @@ VegetableList.propTypes = {
   items: React.PropTypes.array,
 };
 
-export default VegetableList
+export default VegetableList;
