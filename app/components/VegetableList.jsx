@@ -24,9 +24,12 @@ class VegetableList extends React.Component {
       input: '',
     });
   }
-
+  deleteItem(e) {
+    e.preventDefault();
+    action.delete(this);
+  }
   render() {
-    const vegetableListItem = this.props.items.map((el, i) => <VegetableItem item={el} key={i} />);
+    const vegetableListItem = this.props.items.map((el, i) => <VegetableItem item={el} key={i} deleteItem={this.deleteItem.bind(el)} />);
     return (
       <div>
         <h1>Verdure</h1>

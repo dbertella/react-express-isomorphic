@@ -4,6 +4,7 @@ class VegetableItem extends React.Component {
   render() {
     return (
       <div>
+        <a href="#" onClick={this.props.deleteItem}>&times; </a>
         {this.props.item.name}
       </div>
     );
@@ -12,6 +13,7 @@ class VegetableItem extends React.Component {
 
 VegetableItem.propTypes = {
   item: React.PropTypes.object,
+  deleteItem: React.PropTypes.func,
 };
 
 export default VegetableItem;

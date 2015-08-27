@@ -38,18 +38,30 @@ class VegetableItemStore extends EventEmitter {
   getAllVegetables() {
     return items;
   }
+
+  addVegetable(action) {
+    items.push(action.vegetable);
+    this.emitChange();
+  }
+  deleteVegetable(action) {
+    const index = items.indexOf(action.vegetable);
+    items.splice(index, 1);
+    this.emitChange();
+  }
 }
 
-const vegetableIstance = new VegetableItemStore;
+const vegetableStoreIstance = new VegetableItemStore;
 
 dispatcher.register(function(action) {
   switch (action.type) {
   case actionTypes.ADD_VEGETABLE:
-    items.push(action.vegetable);
-    vegetableIstance.emitChange();
+    vegetableStoreIstance.addVegetable(action);
+    break;
+  case actionTypes.DELETE_VEGETABLE:
+    vegetableStoreIstance.deleteVegetable(action);
     break;
   default:
   }
 });
 
-export default vegetableIstance;
+export default vegetableStoreIstance;

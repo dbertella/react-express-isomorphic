@@ -15,16 +15,22 @@ var _constantsActionTypes = require('./../constants/actionTypes');
 
 var _constantsActionTypes2 = _interopRequireDefault(_constantsActionTypes);
 
-var VegetableActionCreator = {
+var VegetableActions = {
   add: function add(item) {
     _dispatcher2['default'].dispatch({
       type: _constantsActionTypes2['default'].ADD_VEGETABLE,
       vegetable: item
     });
+  },
+  'delete': function _delete(item) {
+    _dispatcher2['default'].dispatch({
+      type: _constantsActionTypes2['default'].DELETE_VEGETABLE,
+      vegetable: item
+    });
   }
 };
 
-exports['default'] = VegetableActionCreator;
+exports['default'] = VegetableActions;
 module.exports = exports['default'];
 
 },{"./../constants/actionTypes":5,"./../dispatcher":6}],2:[function(require,module,exports){
@@ -82,29 +88,29 @@ var VegetableAddItem = (function (_React$Component) {
 
 VegetableAddItem.propTypes = {
   input: _react2["default"].PropTypes.string,
-  addItem: _react2["default"].PropTypes["function"],
-  handleInputName: _react2["default"].PropTypes["function"]
+  addItem: _react2["default"].PropTypes.func,
+  handleInputName: _react2["default"].PropTypes.func
 };
 
 exports["default"] = VegetableAddItem;
 module.exports = exports["default"];
 
 },{"react":166}],3:[function(require,module,exports){
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _react = require('react');
 
@@ -116,29 +122,35 @@ var VegetableItem = (function (_React$Component) {
   function VegetableItem() {
     _classCallCheck(this, VegetableItem);
 
-    _get(Object.getPrototypeOf(VegetableItem.prototype), 'constructor', this).apply(this, arguments);
+    _get(Object.getPrototypeOf(VegetableItem.prototype), "constructor", this).apply(this, arguments);
   }
 
   _createClass(VegetableItem, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      return _react2['default'].createElement(
-        'div',
+      return _react2["default"].createElement(
+        "div",
         null,
+        _react2["default"].createElement(
+          "a",
+          { href: "#", onClick: this.props.deleteItem },
+          "× "
+        ),
         this.props.item.name
       );
     }
   }]);
 
   return VegetableItem;
-})(_react2['default'].Component);
+})(_react2["default"].Component);
 
 VegetableItem.propTypes = {
-  item: _react2['default'].PropTypes.object
+  item: _react2["default"].PropTypes.object,
+  deleteItem: _react2["default"].PropTypes.func
 };
 
-exports['default'] = VegetableItem;
-module.exports = exports['default'];
+exports["default"] = VegetableItem;
+module.exports = exports["default"];
 
 },{"react":166}],4:[function(require,module,exports){
 'use strict';
@@ -204,10 +216,18 @@ var VegetableList = (function (_React$Component) {
       });
     }
   }, {
+    key: 'deleteItem',
+    value: function deleteItem(e) {
+      e.preventDefault();
+      _actionsVegetableActionCreatorJsx2['default']['delete'](this);
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this = this;
+
       var vegetableListItem = this.props.items.map(function (el, i) {
-        return _react2['default'].createElement(_VegetableItemJsx2['default'], { item: el, key: i });
+        return _react2['default'].createElement(_VegetableItemJsx2['default'], { item: el, key: i, deleteItem: _this.deleteItem.bind(el) });
       });
       return _react2['default'].createElement(
         'div',
@@ -240,7 +260,8 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 var actionTypes = {
-  ADD_VEGETABLE: 'ADD_VEGETABLE'
+  ADD_VEGETABLE: 'ADD_VEGETABLE',
+  DELETE_VEGETABLE: 'DELETE_VEGETABLE'
 };
 
 exports['default'] = actionTypes;
@@ -375,24 +396,39 @@ var VegetableItemStore = (function (_EventEmitter) {
     value: function getAllVegetables() {
       return items;
     }
+  }, {
+    key: 'addVegetable',
+    value: function addVegetable(action) {
+      items.push(action.vegetable);
+      this.emitChange();
+    }
+  }, {
+    key: 'deleteVegetable',
+    value: function deleteVegetable(action) {
+      var index = items.indexOf(action.vegetable);
+      items.splice(index, 1);
+      this.emitChange();
+    }
   }]);
 
   return VegetableItemStore;
 })(_events2['default']);
 
-var vegetableIstance = new VegetableItemStore();
+var vegetableStoreIstance = new VegetableItemStore();
 
 _dispatcher2['default'].register(function (action) {
   switch (action.type) {
     case _constantsActionTypes2['default'].ADD_VEGETABLE:
-      items.push(action.vegetable);
-      vegetableIstance.emitChange();
+      vegetableStoreIstance.addVegetable(action);
+      break;
+    case _constantsActionTypes2['default'].DELETE_VEGETABLE:
+      vegetableStoreIstance.deleteVegetable(action);
       break;
     default:
   }
 });
 
-exports['default'] = vegetableIstance;
+exports['default'] = vegetableStoreIstance;
 module.exports = exports['default'];
 
 },{"./../constants/actionTypes":5,"./../dispatcher":6,"events":9}],9:[function(require,module,exports){

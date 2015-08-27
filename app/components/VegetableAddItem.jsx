@@ -15,8 +15,8 @@ class VegetableAddItem extends React.Component {
 
 VegetableAddItem.propTypes = {
   input: React.PropTypes.string,
-  addItem: React.PropTypes.function,
-  handleInputName: React.PropTypes.function,
+  addItem: React.PropTypes.func,
+  handleInputName: React.PropTypes.func,
 };
 
 export default VegetableAddItem;
