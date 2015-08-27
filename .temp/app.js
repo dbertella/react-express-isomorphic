@@ -22,10 +22,13 @@ var _react2 = _interopRequireDefault(_react);
 var VegetableAddItem = (function (_React$Component) {
   _inherits(VegetableAddItem, _React$Component);
 
-  function VegetableAddItem() {
+  function VegetableAddItem(props) {
     _classCallCheck(this, VegetableAddItem);
 
-    _get(Object.getPrototypeOf(VegetableAddItem.prototype), "constructor", this).apply(this, arguments);
+    _get(Object.getPrototypeOf(VegetableAddItem.prototype), "constructor", this).call(this, props);
+    this.handleInputName = this.handleInputName.bind(this);
+    this.addItem = this.addItem.bind(this);
+    this.state = {};
   }
 
   // VegetableAddItem.propTypes = {
@@ -33,6 +36,19 @@ var VegetableAddItem = (function (_React$Component) {
   // };
 
   _createClass(VegetableAddItem, [{
+    key: "handleInputName",
+    value: function handleInputName(e) {
+      this.setState({
+        input: e.target.value
+      });
+    }
+  }, {
+    key: "addItem",
+    value: function addItem(e) {
+      e.preventDefault();
+      console.log(this.state.input);
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react2["default"].createElement(
@@ -40,8 +56,8 @@ var VegetableAddItem = (function (_React$Component) {
         null,
         _react2["default"].createElement(
           "form",
-          null,
-          _react2["default"].createElement("input", { type: "text" }),
+          { onSubmit: this.addItem },
+          _react2["default"].createElement("input", { type: "text", onChange: this.handleInputName }),
           _react2["default"].createElement(
             "button",
             null,
