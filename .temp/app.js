@@ -185,6 +185,10 @@ var _actionsVegetableActionCreatorJsx = require('./../actions/VegetableActionCre
 
 var _actionsVegetableActionCreatorJsx2 = _interopRequireDefault(_actionsVegetableActionCreatorJsx);
 
+var _storesVegetableItemStoreJsx = require('./../stores/VegetableItemStore.jsx');
+
+var _storesVegetableItemStoreJsx2 = _interopRequireDefault(_storesVegetableItemStoreJsx);
+
 var VegetableList = (function (_React$Component) {
   _inherits(VegetableList, _React$Component);
 
@@ -195,6 +199,7 @@ var VegetableList = (function (_React$Component) {
     this.handleInputName = this.handleInputName.bind(this);
     this.addItem = this.addItem.bind(this);
     this.state = {};
+    this.state.items = _storesVegetableItemStoreJsx2['default'].getAllVegetables();
   }
 
   _createClass(VegetableList, [{
@@ -217,17 +222,20 @@ var VegetableList = (function (_React$Component) {
     }
   }, {
     key: 'deleteItem',
-    value: function deleteItem(e) {
+    value: function deleteItem(el, e) {
       e.preventDefault();
-      _actionsVegetableActionCreatorJsx2['default']['delete'](this);
+      _actionsVegetableActionCreatorJsx2['default']['delete'](el);
+      this.setState({
+        items: _storesVegetableItemStoreJsx2['default'].getAllVegetables()
+      });
     }
   }, {
     key: 'render',
     value: function render() {
       var _this = this;
 
-      var vegetableListItem = this.props.items.map(function (el, i) {
-        return _react2['default'].createElement(_VegetableItemJsx2['default'], { item: el, key: i, deleteItem: _this.deleteItem.bind(el) });
+      var vegetableListItem = this.state.items.map(function (el, i) {
+        return _react2['default'].createElement(_VegetableItemJsx2['default'], { item: el, key: i, deleteItem: _this.deleteItem.bind(_this, el) });
       });
       return _react2['default'].createElement(
         'div',
@@ -253,7 +261,7 @@ VegetableList.propTypes = {
 exports['default'] = VegetableList;
 module.exports = exports['default'];
 
-},{"./../actions/VegetableActionCreator.jsx":1,"./VegetableAddItem.jsx":2,"./VegetableItem.jsx":3,"react":166}],5:[function(require,module,exports){
+},{"./../actions/VegetableActionCreator.jsx":1,"./../stores/VegetableItemStore.jsx":8,"./VegetableAddItem.jsx":2,"./VegetableItem.jsx":3,"react":166}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -315,15 +323,9 @@ var _componentsVegetableListJsx = require('./components/VegetableList.jsx');
 
 var _componentsVegetableListJsx2 = _interopRequireDefault(_componentsVegetableListJsx);
 
-var _storesVegetableItemStoreJsx = require('./stores/VegetableItemStore.jsx');
+_react2['default'].render(_react2['default'].createElement(_componentsVegetableListJsx2['default'], null), app);
 
-var _storesVegetableItemStoreJsx2 = _interopRequireDefault(_storesVegetableItemStoreJsx);
-
-var initial = _storesVegetableItemStoreJsx2['default'].getAllVegetables();
-
-_react2['default'].render(_react2['default'].createElement(_componentsVegetableListJsx2['default'], { items: initial }), app);
-
-},{"./components/VegetableList.jsx":4,"./stores/VegetableItemStore.jsx":8,"react":166}],8:[function(require,module,exports){
+},{"./components/VegetableList.jsx":4,"react":166}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {

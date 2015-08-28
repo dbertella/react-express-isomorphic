@@ -2,6 +2,7 @@ import React from 'react';
 import VegetableItem from './VegetableItem.jsx';
 import VegetableAddItem from './VegetableAddItem.jsx';
 import action from './../actions/VegetableActionCreator.jsx';
+import VegetableItemStore from './../stores/VegetableItemStore.jsx';
 
 class VegetableList extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class VegetableList extends React.Component {
     this.handleInputName = this.handleInputName.bind(this);
     this.addItem = this.addItem.bind(this);
     this.state = {};
+    this.state.items = VegetableItemStore.getAllVegetables();
   }
   handleInputName(e) {
     this.setState({
@@ -24,12 +26,15 @@ class VegetableList extends React.Component {
       input: '',
     });
   }
-  deleteItem(e) {
+  deleteItem(el, e) {
     e.preventDefault();
-    action.delete(this);
+    action.delete(el);
+    this.setState({
+      items: VegetableItemStore.getAllVegetables(),
+    });
   }
   render() {
-    const vegetableListItem = this.props.items.map((el, i) => <VegetableItem item={el} key={i} deleteItem={this.deleteItem.bind(el)} />);
+    const vegetableListItem = this.state.items.map((el, i) => <VegetableItem item={el} key={i} deleteItem={this.deleteItem.bind(this, el)} />);
     return (
       <div>
         <h1>Verdure</h1>
