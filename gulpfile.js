@@ -55,7 +55,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('watchTask', function() {
-  gulp.watch(['app/**/*.jsx', 'app/**/*.js'], ['lint']);
+  gulp.watch(['server/**/*.js', 'app/**/*.jsx', 'app/**/*.js'], ['lint']);
 });
 
 gulp.task('serve', ['watchify', 'live-server'], function () {

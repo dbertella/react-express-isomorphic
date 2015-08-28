@@ -3,26 +3,8 @@ import actionTypes from './../constants/actionTypes';
 import EventEmitter from 'events';
 
 const CHANGE_EVENT = 'change';
-const items = [
-  {
-    name: 'Carote',
-  },
-  {
-    name: 'Patate',
-  },
-  {
-    name: 'Peperoni',
-  },
-  {
-    name: 'Melanzane',
-  },
-  {
-    name: 'Lattuga',
-  },
-  {
-    name: 'Zucchine',
-  },
-];
+let _items = [];
+
 class VegetableItemStore extends EventEmitter {
 
   addChangeListener(callback) {
@@ -36,16 +18,17 @@ class VegetableItemStore extends EventEmitter {
   }
 
   getAllVegetables() {
-    return items;
+    console.log('getAll', _items);
+    return _items;
   }
 
   addVegetable(action) {
-    items.push(action.vegetable);
+    _items.push(action.vegetable);
     this.emitChange();
   }
   deleteVegetable(action) {
-    const index = items.indexOf(action.vegetable);
-    items.splice(index, 1);
+    const index = _items.indexOf(action.vegetable);
+    _items.splice(index, 1);
     this.emitChange();
   }
 }
@@ -64,4 +47,13 @@ dispatcher.register(function(action) {
   }
 });
 
+fetch('/api/items')
+.then(function(response) {
+  return response.json();
+})
+.then(function(j) {
+  _items = j;
+  console.log(_items);
+  vegetableStoreIstance.emitChange();
+});
 export default vegetableStoreIstance;

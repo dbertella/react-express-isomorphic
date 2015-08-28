@@ -198,11 +198,26 @@ var VegetableList = (function (_React$Component) {
     _get(Object.getPrototypeOf(VegetableList.prototype), 'constructor', this).call(this, props);
     this.handleInputName = this.handleInputName.bind(this);
     this.addItem = this.addItem.bind(this);
-    this.state = {};
-    this.state.items = _storesVegetableItemStoreJsx2['default'].getAllVegetables();
+    // this.componentWillMount = this.componentWillMount.bind(this);
+    // this.componentWillUnmount = this.componentWillUnmount.bind(this);
+    this._onChange = this._onChange.bind(this);
+    this.state = {
+      input: '',
+      items: _storesVegetableItemStoreJsx2['default'].getAllVegetables()
+    };
   }
 
   _createClass(VegetableList, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      _storesVegetableItemStoreJsx2['default'].addChangeListener(this._onChange);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      _storesVegetableItemStoreJsx2['default'].removeChangeListener(this._onChange);
+    }
+  }, {
     key: 'handleInputName',
     value: function handleInputName(e) {
       this.setState({
@@ -225,6 +240,11 @@ var VegetableList = (function (_React$Component) {
     value: function deleteItem(el, e) {
       e.preventDefault();
       _actionsVegetableActionCreatorJsx2['default']['delete'](el);
+      this._onChange();
+    }
+  }, {
+    key: '_onChange',
+    value: function _onChange() {
       this.setState({
         items: _storesVegetableItemStoreJsx2['default'].getAllVegetables()
       });
@@ -355,19 +375,7 @@ var _events = require('events');
 var _events2 = _interopRequireDefault(_events);
 
 var CHANGE_EVENT = 'change';
-var items = [{
-  name: 'Carote'
-}, {
-  name: 'Patate'
-}, {
-  name: 'Peperoni'
-}, {
-  name: 'Melanzane'
-}, {
-  name: 'Lattuga'
-}, {
-  name: 'Zucchine'
-}];
+var _items = [];
 
 var VegetableItemStore = (function (_EventEmitter) {
   _inherits(VegetableItemStore, _EventEmitter);
@@ -396,19 +404,20 @@ var VegetableItemStore = (function (_EventEmitter) {
   }, {
     key: 'getAllVegetables',
     value: function getAllVegetables() {
-      return items;
+      console.log('getAll', _items);
+      return _items;
     }
   }, {
     key: 'addVegetable',
     value: function addVegetable(action) {
-      items.push(action.vegetable);
+      _items.push(action.vegetable);
       this.emitChange();
     }
   }, {
     key: 'deleteVegetable',
     value: function deleteVegetable(action) {
-      var index = items.indexOf(action.vegetable);
-      items.splice(index, 1);
+      var index = _items.indexOf(action.vegetable);
+      _items.splice(index, 1);
       this.emitChange();
     }
   }]);
@@ -430,6 +439,13 @@ _dispatcher2['default'].register(function (action) {
   }
 });
 
+fetch('/api/items').then(function (response) {
+  return response.json();
+}).then(function (j) {
+  _items = j;
+  console.log(_items);
+  vegetableStoreIstance.emitChange();
+});
 exports['default'] = vegetableStoreIstance;
 module.exports = exports['default'];
 

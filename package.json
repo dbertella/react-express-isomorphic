@@ -11,6 +11,7 @@
   "dependencies": {
     "babel-eslint": "^4.1.0",
     "babelify": "^6.2.0",
+    "body-parser": "^1.13.3",
     "browser-sync": "^2.8.2",
     "browserify": "^11.0.1",
     "ejs": "^2.3.3",

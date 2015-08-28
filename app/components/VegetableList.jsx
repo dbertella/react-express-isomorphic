@@ -9,9 +9,21 @@ class VegetableList extends React.Component {
     super(props);
     this.handleInputName = this.handleInputName.bind(this);
     this.addItem = this.addItem.bind(this);
-    this.state = {};
-    this.state.items = VegetableItemStore.getAllVegetables();
+    // this.componentWillMount = this.componentWillMount.bind(this);
+    // this.componentWillUnmount = this.componentWillUnmount.bind(this);
+    this._onChange = this._onChange.bind(this);
+    this.state = {
+      input: '',
+      items: VegetableItemStore.getAllVegetables(),
+    };
   }
+  componentWillMount() {
+    VegetableItemStore.addChangeListener(this._onChange);
+  }
+  componentWillUnmount() {
+    VegetableItemStore.removeChangeListener(this._onChange);
+  }
+
   handleInputName(e) {
     this.setState({
       input: e.target.value,
@@ -29,10 +41,14 @@ class VegetableList extends React.Component {
   deleteItem(el, e) {
     e.preventDefault();
     action.delete(el);
+    this._onChange();
+  }
+  _onChange() {
     this.setState({
       items: VegetableItemStore.getAllVegetables(),
     });
   }
+
   render() {
     const vegetableListItem = this.state.items.map((el, i) => <VegetableItem item={el} key={i} deleteItem={this.deleteItem.bind(this, el)} />);
     return (
