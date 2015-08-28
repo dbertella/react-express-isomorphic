@@ -16,5 +16,10 @@ module.exports = function(app) {
   app.route('/api/items')
   .get(function(req, res) {
     res.send(items);
+  })
+  .post(function(req) {
+    const item = req.body;
+    items.push(item);
+    console.log(items, req.body);
   });
 };

@@ -18,16 +18,22 @@ class VegetableItemStore extends EventEmitter {
   }
 
   getAllVegetables() {
-    console.log('getAll', _items);
     return _items;
   }
 
-  addVegetable(action) {
-    _items.push(action.vegetable);
+  addVegetable(vegetable) {
+    _items.push(vegetable);
     this.emitChange();
+    debugger;
+    fetch('/api/items', {
+      method: 'post',
+      body: {
+        name: vegetable,
+      },
+    });
   }
-  deleteVegetable(action) {
-    const index = _items.indexOf(action.vegetable);
+  deleteVegetable(vegetable) {
+    const index = _items.indexOf(vegetable);
     _items.splice(index, 1);
     this.emitChange();
   }
@@ -38,10 +44,10 @@ const vegetableStoreIstance = new VegetableItemStore;
 dispatcher.register(function(action) {
   switch (action.type) {
   case actionTypes.ADD_VEGETABLE:
-    vegetableStoreIstance.addVegetable(action);
+    vegetableStoreIstance.addVegetable(action.vegetable);
     break;
   case actionTypes.DELETE_VEGETABLE:
-    vegetableStoreIstance.deleteVegetable(action);
+    vegetableStoreIstance.deleteVegetable(action.vegetable);
     break;
   default:
   }
@@ -53,7 +59,6 @@ fetch('/api/items')
 })
 .then(function(j) {
   _items = j;
-  console.log(_items);
   vegetableStoreIstance.emitChange();
 });
 export default vegetableStoreIstance;

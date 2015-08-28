@@ -404,19 +404,25 @@ var VegetableItemStore = (function (_EventEmitter) {
   }, {
     key: 'getAllVegetables',
     value: function getAllVegetables() {
-      console.log('getAll', _items);
       return _items;
     }
   }, {
     key: 'addVegetable',
-    value: function addVegetable(action) {
-      _items.push(action.vegetable);
+    value: function addVegetable(vegetable) {
+      _items.push(vegetable);
       this.emitChange();
+      debugger;
+      fetch('/api/items', {
+        method: 'post',
+        body: {
+          name: vegetable
+        }
+      });
     }
   }, {
     key: 'deleteVegetable',
-    value: function deleteVegetable(action) {
-      var index = _items.indexOf(action.vegetable);
+    value: function deleteVegetable(vegetable) {
+      var index = _items.indexOf(vegetable);
       _items.splice(index, 1);
       this.emitChange();
     }
@@ -430,10 +436,10 @@ var vegetableStoreIstance = new VegetableItemStore();
 _dispatcher2['default'].register(function (action) {
   switch (action.type) {
     case _constantsActionTypes2['default'].ADD_VEGETABLE:
-      vegetableStoreIstance.addVegetable(action);
+      vegetableStoreIstance.addVegetable(action.vegetable);
       break;
     case _constantsActionTypes2['default'].DELETE_VEGETABLE:
-      vegetableStoreIstance.deleteVegetable(action);
+      vegetableStoreIstance.deleteVegetable(action.vegetable);
       break;
     default:
   }
@@ -443,7 +449,6 @@ fetch('/api/items').then(function (response) {
   return response.json();
 }).then(function (j) {
   _items = j;
-  console.log(_items);
   vegetableStoreIstance.emitChange();
 });
 exports['default'] = vegetableStoreIstance;
