@@ -23,13 +23,23 @@ class VegetableItemStore extends EventEmitter {
 
   addVegetable(vegetable) {
     _items.push(vegetable);
+    // console.log(JSON.stringify(vegetable));
     this.emitChange();
-    debugger;
+    // fetch('/api/items', {
+    //   method: 'post',
+    //   body: {
+    //     name: vegetable,
+    //   },
+    // });
     fetch('/api/items', {
       method: 'post',
-      body: {
-        name: vegetable,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        name: vegetable.name,
+      }),
     });
   }
   deleteVegetable(vegetable) {
